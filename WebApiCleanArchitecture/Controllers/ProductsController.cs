@@ -76,12 +76,13 @@ public class ProductsController : ControllerBase
         return Ok(productId);
     }
 
-    [HttpPut("{id}")]
+    [HttpPut]
     [Authorize] // This endpoint requires authentication
-    public async Task<ActionResult<bool>> UpdateProduct(int id, Product product)
+    public async Task<ActionResult<bool>> UpdateProduct([FromBody] Product product)
     {
         // Set the Id received from the URL to the product's Id
-        product.Id = id;
+        //var id = product.Id;
+        //product.Id = id;
 
         var command = new UpdateProductCommand { Product = product };
         var result = await _mediator.Send(command);
